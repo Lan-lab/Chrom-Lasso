@@ -1,0 +1,7 @@
+Tn_all_interaction is an example of the final result file derived from Chrom-Lasso
+In this file, 
+The first column represents chromosome number, for example, "1" represents chromosome 1.
+The second column and the third column represent two interacting loci.
+The forth column is made up of "0", and used as seperation, no specific meaning. 
+The fifth column is as same as seventh column, representing the coefficient of regression.
+The sixth column represents the p value of interaction.
