@@ -1,0 +1,190 @@
+controller.cc IRLS_bk/controller.cc
+IRLS.cc IRLS_bk/IRLS.cc
+20a21
+> #include <ctime>
+51c52,53
+<   p = 1 + Xv.size();
+---
+>   p = Xv.size();
+>   //p = 1 + Xv.size();
+59,61c61,65
+<     gsl_matrix_set(X, i, 0, 1.0); // intercept
+<     for(size_t j = 1; j < p; ++j)
+<       gsl_matrix_set(X, i, j, Xv[j-1][i]);
+---
+>     //gsl_matrix_set(X, i, 0, 1.0); // intercept
+>     //for(size_t j = 1; j < p; ++j)
+>       //gsl_matrix_set(X, i, j, Xv[j-1][i]);
+>     for(size_t j = 0; j < p; ++j)
+>       gsl_matrix_set(X, i, j, Xv[j][i]);
+88a93,94
+>   clock_t time_prev, time_now;
+>   double executeTime = 0.0;
+91c97
+<   
+---
+> 
+92a99
+>   //sleep(30);
+94a102
+>   gsl_vector * w_prev = gsl_vector_calloc(n);
+96a105,106
+>   gsl_vector* bv_prev = gsl_vector_calloc(p);
+>   //gsl_matrix* VB_prev = gsl_matrix_calloc(p, p);
+98a109
+>   //time_prev = clock();
+99a111,113
+>   //time_now = clock();
+>   //executeTime = double(time_now-time_prev)/CLOCKS_PER_SEC; 
+>   //printf("workspace %f\n", executeTime);
+101c115,116
+<   
+---
+>   int itNum = 0;
+>  
+106a122
+>     //time_prev = clock();
+108,110c124,163
+<     
+<     if(fabs(chisq - old_chisq) < 1e-6){ // check convergence
+<       psi = link->compute_dispersion(y, X, bv, offset, mv, rank, link->quasi);
+---
+>     //time_now = clock();
+>     //executeTime = double(time_now-time_prev)/CLOCKS_PER_SEC; 
+>     //printf("svd %f\n", executeTime);
+> 
+>     ++itNum;
+>     //printf("%d\t%f\t%f\t%f\n", itNum, chisq, old_chisq, chisq - old_chisq);
+>     if(isnan(chisq))
+>     {
+>       //printf("chisq is nan\n");
+>       for (int i=0; i<n; ++i)
+>       {
+>         gsl_vector_set(w, i, gsl_vector_get(w_prev, i));
+>       }
+>       //for (int i=0; i<p; ++i)
+>       //{
+>       //  for (int j=0; j<p; ++j)
+>       //  {
+>       //    gsl_matrix_set(VB, i, j, gsl_matrix_get(VB_prev, i, j));
+>       //  }
+>       //}
+>       //printf("set back bv\n");
+>       for (int i=0; i<p; ++i)
+>       {
+>         gsl_vector_set(bv, i, gsl_vector_get(bv_prev, i));
+>       }
+>       //printf("set back done\n");
+> 
+>       //psi = link->compute_dispersion(y, X, bv, offset, mv, rank, link->quasi);
+>       psi = 1.0;
+>       //time_prev = clock();
+>       compute_variance(w);
+>       //time_now = clock();
+>       //executeTime = double(time_now-time_prev)/CLOCKS_PER_SEC; 
+>       //printf("compute variance %f\n", executeTime);
+>       break;
+>     }
+>     else if(fabs(chisq - old_chisq) < EPSILON){ // check convergence
+>       //psi = link->compute_dispersion(y, X, bv, offset, mv, rank, link->quasi);
+>       psi=1.0;
+>       //time_prev = clock();
+111a165,167
+>       //time_now = clock();
+>       //executeTime = double(time_now-time_prev)/CLOCKS_PER_SEC; 
+>       //printf("compute variance %f\n", executeTime);
+115a172,190
+>     //printf("set w\n");
+>     for (int i=0; i<n; ++i)
+>     {
+>       gsl_vector_set(w_prev, i, gsl_vector_get(w, i));
+>     }
+>     //for (int i=0; i<p; ++i)
+>     //{
+>     //  for (int j=0; j<p; ++j)
+>     //  {
+>     //    gsl_matrix_set(VB_prev, i, j, gsl_matrix_get(VB, i, j));
+>     //  }
+>     //}
+>     //printf("set bv\n");
+>     for (int i=0; i<p; ++i)
+>     {
+>       gsl_vector_set(bv_prev, i, gsl_vector_get(bv, i));
+>     }
+>     //printf("set values done\n");
+>     //time_prev = clock();
+116a192,194
+>     //time_now = clock();
+>     //executeTime = double(time_now-time_prev)/CLOCKS_PER_SEC; 
+>     //printf("compute mv %f\n", executeTime);
+118a197,198
+>   gsl_vector_free(bv_prev);
+>   gsl_vector_free(w_prev);
+133,139d212
+<   gsl_matrix * W = gsl_matrix_calloc(n, n);
+<   for(size_t i = 0; i < n; ++i)
+<     gsl_matrix_set(W, i, i, gsl_vector_get(w, i));
+<   
+<   gsl_matrix * t1 = gsl_matrix_calloc(p, n);
+<   gsl_blas_dgemm(CblasTrans, CblasNoTrans, 1, X, W, 0, t1);
+<   
+141c214,224
+<   gsl_blas_dgemm(CblasNoTrans, CblasNoTrans, 1, t1, X, 0, t2);
+---
+>   
+>   for (size_t i=0; i<p; i++) {
+>     for (size_t j=i; j<p; j++) {
+>       double val=0.0;
+>       for (size_t k=0; k<n; k++) {
+>         val+=gsl_matrix_get(X, k, i)*gsl_matrix_get(X, k, j)*gsl_vector_get(w, k);
+>       }
+>       gsl_matrix_set (t2, i, j, val);
+>       gsl_matrix_set (t2, j, i, val);
+>     }
+>   }    
+151,152d233
+<   gsl_matrix_free(W);
+<   gsl_matrix_free(t1);
+LogLink.cc IRLS_bk/LogLink.cc
+58a59,78
+> //void LogLink::compute_mv(gsl_vector * bv, gsl_matrix * Xv,
+> //			 gsl_vector * offset, gsl_vector * mv)
+> //{
+> //  size_t n = Xv->size1, p = Xv->size2;
+> //  
+> //  gsl_matrix * B = gsl_matrix_calloc(p, 1);
+> //  for(size_t i = 0; i < p; ++i)
+> //    gsl_matrix_set(B, i, 0, gsl_vector_get(bv, i));
+> //  
+> //  gsl_matrix * fit = gsl_matrix_calloc(n, 1);
+> //  gsl_blas_dgemm(CblasNoTrans, CblasNoTrans, 1, Xv, B, 0, fit);
+> //  
+> //  for(size_t i = 0; i < n; ++i)
+> //    gsl_vector_set(mv, i, exp(gsl_matrix_get(fit, i, 0) 
+> //			      + gsl_vector_get(offset, i)));
+> //  
+> //  gsl_matrix_free(B);
+> //  gsl_matrix_free(fit);
+> //}
+> 
+64,69c84,85
+<   gsl_matrix * B = gsl_matrix_calloc(p, 1);
+<   for(size_t i = 0; i < p; ++i)
+<     gsl_matrix_set(B, i, 0, gsl_vector_get(bv, i));
+<   
+<   gsl_matrix * fit = gsl_matrix_calloc(n, 1);
+<   gsl_blas_dgemm(CblasNoTrans, CblasNoTrans, 1, Xv, B, 0, fit);
+---
+>   gsl_vector * fit = gsl_vector_calloc(n);
+>   gsl_blas_dgemv(CblasNoTrans, 1.0, Xv, bv, 0, fit);
+72c88
+<     gsl_vector_set(mv, i, exp(gsl_matrix_get(fit, i, 0) 
+---
+>     gsl_vector_set(mv, i, exp(gsl_vector_get(fit, i) 
+75,76c91
+<   gsl_matrix_free(B);
+<   gsl_matrix_free(fit);
+---
+>   gsl_vector_free(fit);
+main.cc IRLS_bk/main.cc
+parser.cc IRLS_bk/parser.cc

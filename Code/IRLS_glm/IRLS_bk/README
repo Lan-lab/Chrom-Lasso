@@ -1,0 +1,36 @@
+C++ implementation of the Iteratively Re-Weighted Least Squares algorithm (IRLS)
+ for generalized linear models (GLM)
+
+IRLS is free software, you can redistribute it and/or modify it under
+the terms of the GNU General Public License.
+
+The GNU General Public License does not permit this software to be
+redistributed in proprietary programs.
+
+This library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+** Install and usage
+prerequisite: GNU Scientific Library (GSL) and C++ compiler (for instance g++)
+
+To test, run `R --vanilla < test.R`. This will:
+- simulate data;
+- run the built-in glm() function (output shown on stdout);
+- save data in files (test_y.dat, test_X.dat and test_offset.dat);
+- compile c++ code (test.cpp) and run IRLS (output also shown on stdout).
+
+
+** Extension to other GLM
+
+To add a new link function, create a class mimicking "LogLink".
+The new class should inherit from "LinkFunc" (base class) and
+implement all required methods.
+
+
+** References
+
+Dobson, A. J. An Introduction to Generalized Linear Models (Chapman and Hall/CRC, 2002), second edn. URL http://www.worldcat.org/isbn/1584881658.
+
+McCullagh, P. & Nelder, J. A. Generalized Linear Models. Monographs on Statistics & Applied Probability (Chapman & Hall/CRC, London, United Kingdom, 1989), second edition edn. URL http://www.worldcat.org/isbn/0412317605.
