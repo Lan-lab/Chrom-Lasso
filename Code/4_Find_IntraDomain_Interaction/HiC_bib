@@ -1,0 +1,21 @@
+@article{efron2004least,
+   title={Least angle regression},
+   author={Efron, B. and Hastie, T. and Johnstone, I. and Tibshirani, R.},
+   journal={The Annals of statistics},
+   volume={32},
+   number={2},
+   pages={407--499},
+   year={2004},
+   publisher={Institute of Mathematical Statistics}
+}
+
+@article{zou2005regularization,
+   title={Regularization and variable selection via the elastic net},
+   author={Zou, H. and Hastie, T.},
+   journal={Journal of the Royal Statistical Society Series B},
+   volume={67},
+   number={2},
+   pages={301--320},
+   year={2005},
+   publisher={Royal Statistical Society}
+}
