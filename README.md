@@ -1,4 +1,4 @@
-# Chrom-Lasso-
+# Chrom-Lasso
 Chrom-Lasso is a tool to analyze Hi-C data for identifying chromatin interactions.
 The code of Chrom-Lasso is made up of Cpp and R.
 The following files are code, input files, test data, and tutorial for Chrom-Lasso.
