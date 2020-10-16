@@ -1,0 +1,7 @@
+#####Tips for Rscript empericalDist.r#####
+The following code should be revised before use,
+pay attention to the name of input and output files.
+pdf("Mouse.empericalDist.bin100.pdf")
+s<-read.table("Mouse.empericalDist.bin100")
+x<-read.table("Mouse.bin100.withNonloop")
+write.matrix(coefMatrix, file="Mouse.polyCoef", sep=" ")
