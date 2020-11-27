@@ -2,7 +2,8 @@
 1. For cutting site input file, please make sure this file is derived from the same genome version with the one you use for mapping.
 2. For domain file, please check the species for data at first.
 3. For Rscript "empericalDist.r" in /Code/3_Model_Distribution/, please make sure you change the input and ouput files before running the code.
-4. When using Shell scripts in the totorial for sorting chromosome and do "for" circulation, please make sure the total number of chromosomes is changed befor running the code.
+4. When using Shell scripts in the tutorial for sorting chromosome and do "for" circulation, please make sure the total number of chromosomes is changed befor running the code.
 5. Chrom-Lasso focuses on detecting long-range chromatin interactions with the distance between interaction loci over 20000bp, but this parameter can be changed in the Cpp code to satisfy the needs of study.
 6. When testing for the reads distribution surrounding potential interaction loci pair, Chrom-Lasso defines the testing range by parameter "NEIGHBDIS", 
    when this parameter is 5, it defines a 11 cutting site window centered by the potential loci, and you can change this parameter in Cpp code to satisfy the needs of study.
+7. For more genome versions, you can add the information of genome version in /Code/2_Arrange_Domain/, in the "HiC_mixturePLD_main.cpp". In the "if (dir_genomeFasta=="")" part of this Cpp code, you can edit the genome version that you want to use in your study by adding the chromosome size of this genome to the Cpp code. 
