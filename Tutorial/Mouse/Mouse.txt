@@ -42,6 +42,7 @@ starting from the "sortChr" file derived from preprocessing step.
 ###1. Rearrange reads according to cutting site file and domain file.###
 Parameter: 
 -g: set the genome version
+-w: read size, distance to cutting site threshold,model bin size, number of nodes, cores per node
 -d: path to domain file
 -c: path to cutting site file
 
