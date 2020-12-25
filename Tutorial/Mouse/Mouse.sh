@@ -31,7 +31,7 @@ awk -v "fname1"=Mouse_norm.txt -v "fname2"=Mouse_abnorm.sam -v "fname3"=Mouse_un
 awk '{printf("%s %s %s %d %s %s %s %d", $1, $2, $3, 0, $4, $5, $6, 1); for (i=7; i<=NF; i++) {printf(" %s",$i);}printf("\n");}' Mouse_norm.txt > Mouse.frag.txt
 sort -k2,2d -k6,6d -k4,4n -k8,8n -k1,1n -k5,5n -k3,3n Mouse.frag.txt > Mouse.sort.txt
 awk -v "name"=Mouse  -f /Code/1_Preprocess/2_Filter_Reads/dups.awk  Mouse.sort.txt
-awk '{if($1==0){strand1=1;}else if($1==16) {strand1=0;} if($5==0){strand2=1;}else if($5==16) {strand2=0;} print $2"\t"$3"\t"strand1"\t"$6"\t"$7"\t"strand2"\t0";}' Mouse_merged_nodups.txt > Mouse.formatted
+awk '{if($1==0){strand1=1;}else if($1==16) {strand1=0;} if($5==0){strand2=1;}else if($5==16) {strand2=0;} print $2"\t"$3"\t"strand1"\t"$6"\t"$7"\t"strand2"\t0";}' Mousemerged_nodups.txt > Mouse.formatted
 for chr in {1..19} X;do awk '{if($1=="'$chr'") print $0;}' Mouse.formatted;done > Mouse.sortChr
 ################################################################################################
 #####Identify Chromatin Interactions by Chrom-Lasso#####
