@@ -190,7 +190,7 @@ Rscript /Code/7_Present_Significance/fdrFromRandomSamples.r
 Results:
 It generates a "randomSamples.combined.fdr" file.
 
-Get BH_0.05 for FDR cutoff:
+Get BH_0.01 for FDR cutoff:
 awk '{if($5<0.01 && $5>0.0099) print $0;}' randomSamples.combined.fdr | sort -k5,5n | tail -n1 | awk '{print $4}' > BH_0.01 (R:p.adjust function selects method"fdr")
 awk '{if($6<0.01 && $6>0.0099) print $0;}' randomSamples.combined.fdr | sort -k6,6n | tail -n1 | awk '{print $4}' > BY_0.01 (R:p.adjust function selects method"BY")
 #####BH_0.01=0.00000587
