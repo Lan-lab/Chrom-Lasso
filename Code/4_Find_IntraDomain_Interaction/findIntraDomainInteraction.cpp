@@ -36,7 +36,7 @@
 #define TESTFREQTHRES 1
 #define NEIGHBDIS 5
 //#define MORANI 0.001
-#define PCUTOFF 0.004
+#define PCUTOFF 0.05
 #define PRECISION 10e48
 #define READBLOCK 409600
 #define OPTDIST 1000
