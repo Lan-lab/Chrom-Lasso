@@ -53,7 +53,6 @@ For each chromosome, it generates 3 files, "chr_csInterChromTotalMap", "chr_doma
 
 ###2. Model the background distribution via polynomial regression for Y(ligation frequency) and X(genomic distance).###
 for chr in chr{1..22} chrX;do awk 'function abs(x){return ((x < 0.0) ? -x : x)}BEGIN{i=0;}{if($2!=0){map[i]=$1;++i;}}END{for(j=0;j<i;++j){for(k=j+1;k<i;++k){dis=abs(map[j]-map[k]);if(dis<100000){dist[int(dis/100)]++;}else{break;}}}for(i=0;i<1000;++i) print i"\t"dist[i];}' "$chr"_csInterChromTotalMap;done | awk '{map[$1]+=$2;}END{for(i=0;i<1000;++i) print i"\t"map[i];}' > csDistanceDistr
-cat Human.sortChr | awk 'function abs(x){return ((x < 0.0) ? -x : x)}{dis=abs($2-$5);if($1==$4 && dis<10000000){map[int(dis/1000)]++;}}END{for(i=0;i<10000;++i) print i"\t"map[i];}' > Human.empericalDist
 cat Human.sortChr | awk 'function abs(x){return ((x < 0.0) ? -x : x)}{dis=abs($2-$5);if($1==$4 && dis<1000000){map[int(dis/100)]++;}}END{for(i=0;i<10000;++i) print i"\t"map[i];}' > Human.empericalDist.bin100				
 cat Human.sortChr | awk 'function abs(x){return ((x < 0.0) ? -x : x)}BEGIN{nonloop=0;}{if($3!=$6 && (($2<$5 && $3==1) || ($2>$5 && $3==0))){nonloop++;}else{dis=abs($2-$5);if($1==$4 && dis<1000000){map[int(dis/100)]++;}}}END{for(i=0;i<10000;++i) {print i"\t"map[i];} print i"\t"nonloop}' > Human.bin100.withNonloop
 Rscript /Code/3_Model_Distribution/empericalDist.r
@@ -91,7 +90,7 @@ cd ../
 done;
 
 Results:
-In each chromosome folder, it generates many "nnlassoOut" files.
+In each chromosome folder, it generates many "nnlassoOut" files for domains.
 
 ###5. Test reads distribution of possible interactions.###
 Order:
@@ -188,11 +187,11 @@ cat chr*/randomSamples* > randomSamples.combined
 Rscript /Code/7_Present_Significance/fdrFromRandomSamples.r
 
 Results:
-It generates a "randomSamples.combined.fdr" file.
+It generates a "randomSamples.combined.posFdr" file.
 
 Get BH_0.01 for FDR cutoff:
-awk '{if($5<0.01 && $5>0.0099) print $0;}' randomSamples.combined.fdr | sort -k5,5n | tail -n1 | awk '{print $4}' > BH_0.01 (R:p.adjust function selects method"fdr")
-awk '{if($6<0.01 && $6>0.0099) print $0;}' randomSamples.combined.fdr | sort -k6,6n | tail -n1 | awk '{print $4}' > BY_0.01 (R:p.adjust function selects method"BY")
+awk '{if($5<0.01 && $5>0.0099) print $0;}' randomSamples.combined.posFdr | sort -k5,5n | tail -n1 | awk '{print $4}' > BH_0.01 (R:p.adjust function selects method"fdr")
+awk '{if($6<0.01 && $6>0.0099) print $0;}' randomSamples.combined.posFdr | sort -k6,6n | tail -n1 | awk '{print $4}' > BY_0.01 (R:p.adjust function selects method"BY")
 #####BH_0.01=0.00000587
 
 Get interactions below the FDR cutoff:
