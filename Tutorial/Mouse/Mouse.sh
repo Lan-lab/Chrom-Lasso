@@ -42,6 +42,7 @@ starting from the "sortChr" file derived from preprocessing step.
 ###1. Rearrange reads according to cutting site file and domain file.###
 Parameter: 
 -g: set the genome version
+-w: read size, distance to cutting site threshold,model bin size, number of nodes, cores per node
 -d: path to domain file
 -c: path to cutting site file
 
@@ -188,11 +189,11 @@ cat chr*/randomSamples* > randomSamples.combined
 Rscript /Code/7_Present_Significance/fdrFromRandomSamples.r
 
 Results:
-It generates a "randomSamples.combined.fdr" file.
+It generates a "randomSamples.combined.posFdr" file.
 
 Get BH_0.01 for FDR cutoff:
-awk '{if($5<0.01 && $5>0.0099) print $0;}' randomSamples.combined.fdr | sort -k5,5n | tail -n1 | awk '{print $4}' > BH_0.01 (R:p.adjust function selects method"fdr")
-awk '{if($6<0.01 && $6>0.0099) print $0;}' randomSamples.combined.fdr | sort -k6,6n | tail -n1 | awk '{print $4}' > BY_0.01 (R:p.adjust function selects method"BY")
+awk '{if($5<0.01 && $5>0.0099) print $0;}' randomSamples.combined.posFdr | sort -k5,5n | tail -n1 | awk '{print $4}' > BH_0.01 (R:p.adjust function selects method"fdr")
+awk '{if($6<0.01 && $6>0.0099) print $0;}' randomSamples.combined.posFdr | sort -k6,6n | tail -n1 | awk '{print $4}' > BY_0.01 (R:p.adjust function selects method"BY")
 #####BH_0.01=0.00000587
 
 Get interactions below the FDR cutoff:
