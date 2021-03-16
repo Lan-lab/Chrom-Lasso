@@ -5,4 +5,5 @@ The second column and the third column represent two interacting loci.
 The forth column is used as seperation. 
 The fifth column represents the coefficient of fit for polynomial regression.
 The sixth column represents the p value of interaction.
-The seventh column represents the coefficient of lasso regression.
+The seventh column represents the coefficient of lasso regression, 0 means that it is not selected by lasso regression.
+If the fifth column is not equal to seventh column, that indicates this interaction is under lasso regression.
