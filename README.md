@@ -15,8 +15,6 @@ The "Juicer" generates "merged_nodups" file, and you can use the Shell scripts i
 4. Tutorial：
 This folder contains the analysis pipeline for Mouse and Human, you can directly use "sotrChr" files in "Test_Data" folder to test the pipeline, 
 you can also use your own "fastq" files from Hi-C experiments to test the tutorial step by step from the preprocessing to running Chrom-Lasso.
-5 Output_File_Example:
-This folder contains the example and introduction to output files produced by Chrom-Lasso.
 
 The compile of Chrom-Lasso needs:
 gcc (4.9.2), boost_1.51, the higher version of gcc or boost may cause unsuccessful compile.
