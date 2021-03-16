@@ -16,8 +16,8 @@ The "Juicer" generates "merged_nodups" file, and you can use the Shell scripts i
 This folder contains the analysis pipeline for Mouse and Human, you can directly use "sotrChr" files in "Test_Data" folder to test the pipeline, 
 you can also use your own "fastq" files from Hi-C experiments to test the tutorial step by step from the preprocessing to running Chrom-Lasso.
 
-The compile of Chrom-Lasso needs:
-gcc (4.9.2), boost_1.51, the higher version of gcc or boost may cause unsuccessful compile.
+The compile of Chrom-Lasso recommends:
+gcc (4.9.2), boost_1.51.
 And it also needs R (>=3.0) to run polynomial regression and lasso regression.
 Users can use "makefile" in Code folder for compile.
 
