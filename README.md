@@ -1,7 +1,8 @@
 # Chrom-Lasso
-Chrom-Lasso is a tool to analyze Hi-C data for identifying chromatin interactions.
-The code of Chrom-Lasso is made up of Cpp and R.
-The following files are code, input files, test data, and tutorial for Chrom-Lasso.
+## Introduction of Chrom-Lasso
+Chrom-Lasso is a tool to analyze Hi-C data for identifying cis chromatin interactions (interactions occur within chromosome).
+## Introduction of Folders
+The following folders are code, input files, test data, and tutorial for Chrom-Lasso.
 1. Code：
 This folder contains codes for Chrom-Lasso, the usage of them is shown in the "Tutorial" folder.
 2. Prepare_Input_File：
@@ -15,11 +16,12 @@ The "Juicer" generates "merged_nodups" file, and you can use the Shell scripts i
 4. Tutorial：
 This folder contains the analysis pipeline for Mouse and Human, you can directly use "sotrChr" files in "Test_Data" folder to test the pipeline, 
 you can also use your own "fastq" files from Hi-C experiments to test the tutorial step by step from the preprocessing to running Chrom-Lasso.
-
+## Environment
 The compile of Chrom-Lasso recommends:
 gcc (4.9.2), boost_1.51.
 And it also needs R (>=3.0) to run polynomial regression and lasso regression.
 Users can use "makefile" in Code folder for compile.
+## 
 
 
  
