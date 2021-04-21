@@ -20,7 +20,7 @@ you can also use your own "fastq" files from Hi-C experiments to test the tutori
 The compile of Chrom-Lasso recommends: gcc (4.9.2), boost_1.51. And it also needs R (>=3.0) to run polynomial regression and lasso regression. Users can use "makefile" in Code folder for compile.
 ## Tutorial
 ### Prepare input files
-Chrom-Lasso needs 2 input files prepared according to the Hi-C experimental design. 
+Chrom-Lasso needs 3 input files prepared according to the Hi-C experimental design. 
 #### Cutting site file
 The cutting site file contains the cutting sites of restriction enzyme used in Hi-C experiments. Each line stands for a cutting site locus on the genome.<br>  
 ![cutting site file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/cutting_site_bed.png)<br>  
@@ -39,5 +39,7 @@ for chr in {1..19} X;do awk '{if($1=="'$chr'") print $0;}' Mouse.formatted;done 
 ```
 The sortChr file contains the paired end sequencing information of Hi-C data.<br>
 ![sortChr file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/sortChr.png)<br>
+### Run Chrom-Lasso to detect cis chromatin interactions
+
 
  
