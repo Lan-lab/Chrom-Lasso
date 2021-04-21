@@ -23,6 +23,6 @@ The compile of Chrom-Lasso recommends: gcc (4.9.2), boost_1.51. And it also need
 Chrom-Lasso needs 2 input files prepared according to the Hi-C experimental design. 
 #### Cutting site file
 The cutting site file contains the cutting sites of restriction enzyme used in Hi-C experiments.
-
+![cutting site file]
 
  
