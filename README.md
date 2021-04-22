@@ -50,6 +50,25 @@ The sortChr file contains the paired end sequencing information of Hi-C data.<br
 -w: read size, distance to cutting site threshold, model bin size, number of nodes, cores per node<br>
 -d: path to domain file<br>
 -c: path to cutting site file
+##### Results:
+For each chromosome, this step generates 3 files, "chr_csInterChromTotalMap", "chr_domainCSinterFreq", "chr_domainSitesMap".<br>
+chr_csInterChromTotalMap: this file contains inter-chromosomal hybrid fragments for evaluating bias.<br>
+chr_domainCSinterFreq: this file contains cutting site contact frequency for each domain.<br>
+chr_domainSitesMap: this file contains cutting site loci on this chromosome.
+#### 2. Model the background distribution
+```
+for chr in chr{1..19} chrX;do awk 'function abs(x){return ((x < 0.0) ? -x : x)}BEGIN{i=0;}{if($2!=0){map[i]=$1;++i;}}END{for(j=0;j<i;++j){for(k=j+1;k<i;++k){dis=abs(map[j]-map[k]);if(dis<100000){dist[int(dis/100)]++;}else{break;}}}for(i=0;i<1000;++i) print i"\t"dist[i];}' "$chr"_csInterChromTotalMap;done | awk '{map[$1]+=$2;}END{for(i=0;i<1000;++i) print i"\t"map[i];}' > csDistanceDistr
+cat Mouse.sortChr | awk 'function abs(x){return ((x < 0.0) ? -x : x)}{dis=abs($2-$5);if($1==$4 && dis<1000000){map[int(dis/100)]++;}}END{for(i=0;i<10000;++i) print i"\t"map[i];}' > empericalDist.bin100				
+cat Mouse.sortChr | awk 'function abs(x){return ((x < 0.0) ? -x : x)}BEGIN{nonloop=0;}{if($3!=$6 && (($2<$5 && $3==1) || ($2>$5 && $3==0))){nonloop++;}else{dis=abs($2-$5);if($1==$4 && dis<1000000){map[int(dis/100)]++;}}}END{for(i=0;i<10000;++i) {print i"\t"map[i];} print i"\t"nonloop}' > bin100.withNonloop
+Rscript /Code/3_Model_Distribution/empericalDist.r
+```
+##### Results:
+This step generates the "PolyCoef" file used for estimating data background.<br>
+Each line stands for a coefficient used in the 7th-degree polynomial regression.<br>
+![polycoef file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/polycoef.png)
+
+
+
 
 
  
