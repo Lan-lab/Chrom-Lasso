@@ -65,7 +65,7 @@ Rscript /Code/3_Model_Distribution/empericalDist.r
 ##### Results:
 This step generates the "PolyCoef" file used for estimating data background.<br>
 "PolyCoef" file contains parameters used in the 7th-degree polynomial regression.<br>
-#### 3. Identify adjacent interacting centers for lasso regression
+#### 3. Identify adjacent interacting centers 
 ```
 for chr in {1..19} X;
 do 
