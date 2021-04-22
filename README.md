@@ -65,7 +65,49 @@ Rscript /Code/3_Model_Distribution/empericalDist.r
 ##### Results:
 This step generates the "PolyCoef" file used for estimating data background.<br>
 "PolyCoef" file contains parameters used in the 7th-degree polynomial regression.<br>
-![polycoef file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/polycoef.png)
+#### 3. Identify interactions for lasso regression
+```
+for chr in {1..19} X;
+do 
+   mkdir chr$chr
+   cd chr$chr
+   /Code/4_Find_IntraDomain_Interaction/findIntraDomainInteraction  /Output_path/chr$chr"_csInterChromTotalMap" /Output_path/chr$chr"_domainSitesMap" /Output_path/chr$chr"_domainCSinterFreq"  chr$chr"_out"  /Output_path/PolyCoef \-13.95 1.854 > chr$chr"_out_summary"
+   cd ../
+done;
+```
+##### Results:
+For each chromosome, this step generates an independent folder containing "regionData" and "distMatrix" files for each domain on this chromosome.<br>
+"regionData" and "distMatrix" files containing frequency and genomic distance information for interactions that need lasso regression to select.
+#### 4. Lasso regression to select interactions
+```
+for chr in {1..19} X;
+do 
+   cd chr$chr
+   domainNum=`tail -n1 chr"$chr"_out_debug | awk '{print $2}'`
+   for (( c=0; c<=$domainNum; c++ ));
+   do
+   Rscript /Code/5_Lasso_Determine_Center/nnlasso.HiC.r regionData_$c distMatrix_$c > nnlassoOut_$c
+   done;
+cd ../
+done;
+```
+##### Results:
+In each chromosome folder, this step generates "nnlassoOut" file for each domain, which contains the coefficients resulting from lasso regression.
+#### 5. Identify independent interacting center
+```
+for chr in {1..19} X;
+do 
+   cd chr$chr
+   /Code/6_Test_Distribution/outputTestPosPvalue  /Output_path/chr$chr"_csInterChromTotalMap" /Output_path/chr$chr"_domainSitesMap" /Output_path/chr$chr"_domainCSinterFreq" chr$chr"_posP" /Output_path/Mouse.polyCoef \-13.95 1.854
+   cd ../
+done;
+```
+##### Results:
+In each chromosome folder, this step generates "oneCol" and "testPosP" file for each domain.
+
+
+
+
 
 
 
