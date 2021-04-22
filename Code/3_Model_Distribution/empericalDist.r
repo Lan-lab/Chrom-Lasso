@@ -1,5 +1,5 @@
 library(MASS)
-pdf("Mouse.empericalDist.bin100.pdf")
+pdf("empericalDist.bin100.pdf")
 
 s<-read.table("empericalDist.bin100")
 allFrag<-s[1:10000,2]
