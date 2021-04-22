@@ -1,9 +1,9 @@
 library(MASS)
 pdf("Mouse.empericalDist.bin100.pdf")
 
-s<-read.table("Mouse.empericalDist.bin100")
+s<-read.table("empericalDist.bin100")
 allFrag<-s[1:10000,2]
-x<-read.table("Mouse.bin100.withNonloop")
+x<-read.table("bin100.withNonloop")
 #a<-log(x[1:1000,2])
 
 b<-log(x[1:1000,1]*100+50)
@@ -56,7 +56,7 @@ for(i in 2:length(coef(lmobj)))
 print(coefNames)
 coefMatrix<-cbind(coefNames,coef(lmobj))
 print(coefMatrix)
-write.matrix(coefMatrix, file="Mouse.polyCoef", sep=" ")
+write.matrix(coefMatrix, file="PolyCoef", sep=" ")
 print(summary(lmobj))
 print(lmobj)
 #co<-coef(lmobj)
