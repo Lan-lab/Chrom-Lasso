@@ -10,12 +10,10 @@ This folder contains input files needed by Chrom-Lasso to do analysis, mainly ar
 The domain files are constant for specific species, but the genomic coordinate in the file can be changed with genome version by tool "LiftOver".
 The cutting site files can be produced by tool "Oligomatch" with reference genome and cutting sequence for the restriction endonuclease.
 3. Test_Data：
-This folder contains "sortChr" files for Mouse and Human for testing Chrom-Lasso, the "sortChr" file are preprocessed file from raw "fastq" sequencing files,
-the preprocessing of "fastq" files can be done with our tutorial, which is the same as "Juicer", so you can use "Juicer" as well.
-The "Juicer" generates "merged_nodups" file, and you can use the Shell scripts in tutorial that sorts the file by chromosome order to generate "sortChr" file for further analysis.
+This folder contains "sortChr" simple example files for Mouse and Human for testing Chrom-Lasso, the "sortChr" file are preprocessed file from raw "fastq" sequencing files,
+the preprocessing of "fastq" files can be done by `Juicer` (https://github.com/aidenlab/juicer). The `Juicer` generates "merged_nodups" file, and you can use the Shell scripts in tutorial that sorts the file by chromosome order to generate "sortChr" file for further analysis.
 4. Tutorial：
-This folder contains the analysis pipeline for Mouse and Human, you can directly use "sotrChr" files in "Test_Data" folder to test the pipeline, 
-you can also use your own "fastq" files from Hi-C experiments to test the tutorial step by step from the preprocessing to running Chrom-Lasso.
+This folder contains the analysis pipeline for Mouse and Human.
 ## Environment
 The compile of Chrom-Lasso Cpp code needs: gcc (>=4.9). And it also needs R (>=3.0) to run polynomial regression and lasso regression. Users can use "makefile" in Code folder for compiling Cpp code.
 ## Tutorial (mouse)
@@ -31,7 +29,7 @@ The domain file contains the genomic regions identified as TADs. Each line stand
 The raw domain files are downloaded from: (Dixon, J., Selvaraj, S., Yue, F. et al. Topological domains in mammalian genomes identified by analysis of chromatin interactions. 
 Nature 485, 376–380 (2012)). The raw version for Mouse genome is mm9 and for Human genome is hg18. Users can transform the genome version via tool "LiftOver".
 #### 3. sortChr file
-Users should first generate merged_nodups.txt file by JUICER (https://github.com/aidenlab/juicer) from raw Hi-C sequencing fastq files.<br>  
+Users should first generate merged_nodups.txt file by `Juicer` (https://github.com/aidenlab/juicer) from raw Hi-C sequencing fastq files.<br>  
 Here, we use Mouse_merged_nodups.txt file as example to generate sortChr file<br>
 ```
 awk '{if($1==0){strand1=1;}else if($1==16) {strand1=0;} if($5==0){strand2=1;}else if($5==16) {strand2=0;} print $2"\t"$3"\t"strand1"\t"$6"\t"$7"\t"strand2"\t0";}' Mouse_merged_nodups.txt > Mouse.formatted
