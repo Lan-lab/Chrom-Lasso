@@ -9,31 +9,6 @@ and for domain file, we upload domain files for mouse mm10 genome, and for human
 and researchers can transform the genome version via LiftOver.
 More details can be found in folder "Prepare_Input_File"
 ################################################################################################
-#####Preprocess#####
-The preprocessing of Hi-C data mainly contains two parts, mappping and filtering reads.
-Here we directly use the preprocess protocol of JUICER to handle the raw sequencing file of Hi-C library.
-In the preprocess part, the raw "fastq" file will be transformed into "sortChr" file.
-
-###1. Mapping and sorting.
-refSeq=/"The path to your reference genome for mapping"/
-name1=/"The path to your paired-end fastq file 1"/
-name2=/"The path to your paired-end fastq file 2"/
-bwa mem -t 16 $refSeq $name1 > Human_1.sam
-bwa mem -t 16 $refSeq $name2 > Human_2.sam 
-sort -k1,1f Human_1.sam > Human_1_sort.sam
-sort -k1,1f Human_2.sam > Human_2_sort.sam
-awk 'BEGIN{OFS="\t"}NF >= 11{$1 = $1"/1";print}' Human_1_sort.sam > Human_1_sort1.sam
-awk 'BEGIN{OFS="\t"}NF >= 11{$1 = $1"/2";print}' Human_2_sort.sam > Human_2_sort1.sam
-sort -k1,1f -m  Human_1_sort1.sam Human_2_sort1.sam > Human.sam
-
-###2. Filtering reads.
-awk -v "fname1"=Human_norm.txt -v "fname2"=Human_abnorm.sam -v "fname3"=Human_unmapped.sam -f /Code/1_Preprocess/2_Filter_Reads/chimeric_blacklist.awk  Human.sam
-awk '{printf("%s %s %s %d %s %s %s %d", $1, $2, $3, 0, $4, $5, $6, 1); for (i=7; i<=NF; i++) {printf(" %s",$i);}printf("\n");}' Human_norm.txt > Human.frag.txt
-sort -k2,2d -k6,6d -k4,4n -k8,8n -k1,1n -k5,5n -k3,3n Human.frag.txt > Human.sort.txt
-awk -v "name"=Human  -f /Code/1_Preprocess/2_Filter_Reads/dups.awk  Human.sort.txt
-awk '{if($1==0){strand1=1;}else if($1==16) {strand1=0;} if($5==0){strand2=1;}else if($5==16) {strand2=0;} print $2"\t"$3"\t"strand1"\t"$6"\t"$7"\t"strand2"\t0";}' Humanmerged_nodups.txt > Human.formatted
-for chr in chr{1..22} chrX;do awk '{if($1=="'$chr'") print $0;}' Human.formatted;done > Human.sortChr
-################################################################################################
 #####Identify Chromatin Interactions by Chrom-Lasso#####
 After the preprocessing of Hi-C data, it comes to the interaction calling by Chrom-Lasso, 
 In this file we illustrate the analysis of mouse Hi-C data step by step using Chrom-Lasso,
