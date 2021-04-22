@@ -219,6 +219,13 @@ awk '{if($6<0.00000587) print $0;}' all_interactions > interactions_fdr0.05
 ![neighbour file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/neighbour.png)<br>
 5. When testing for the reads distribution surrounding potential interacting loci pair, Chrom-Lasso defines the reads frequency for testing by parameter "TESTFREQTHRES" in `cpp code`, and you can change this parameter in Cpp code to satisfy the needs of study. This parameter should be changed in "/Code/4_Find_IntraDomain_Interaction/findIntraDomainInteraction.cpp", and "/Code/6_Test_Distribution/outputTestPosPvalue.cpp" at the same time.<br>
 ![thres file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/freq.png)<br>
+6. If users want to add some new genome version for analysis, please edit in "Chrom-Lasso/Code/2_Arrange_Domain/HiC_mixturePLD_main.cpp". Users should add an `else if` to tell the length of chromosomes for this genome version.<br>
+![genome file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/genome.png)<br>
+
+
+
+
+
 
 
 
