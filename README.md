@@ -64,7 +64,7 @@ Rscript /Code/3_Model_Distribution/empericalDist.r
 ```
 ##### Results:
 This step generates the "PolyCoef" file used for estimating data background.<br>
-Each line stands for a coefficient used in the 7th-degree polynomial regression.<br>
+"PolyCoef" file contains parameters used in the 7th-degree polynomial regression.<br>
 ![polycoef file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/polycoef.png)
 
 
