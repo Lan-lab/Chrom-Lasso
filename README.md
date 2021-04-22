@@ -65,7 +65,7 @@ Rscript /Code/3_Model_Distribution/empericalDist.r
 ##### Results:
 This step generates the "PolyCoef" file used for estimating data background.<br>
 "PolyCoef" file contains parameters used in the 7th-degree polynomial regression.<br>
-#### 3. Identify interactions for lasso regression
+#### 3. Identify adjacent interacting centers for lasso regression
 ```
 for chr in {1..19} X;
 do 
@@ -93,7 +93,7 @@ done;
 ```
 ##### Results:
 In each chromosome folder, this step generates "nnlassoOut" file for each domain, which contains the coefficients resulting from lasso regression.
-#### 5. Identify independent interacting center
+#### 5. Identify independent interacting centers
 ```
 for chr in {1..19} X;
 do 
