@@ -213,9 +213,9 @@ awk '{if($6<0.00000587) print $0;}' all_interactions > interactions_fdr0.05
 ### Reminder:
 1. For cutting site input file, please make sure this file is derived from the `same genome version` with the one you use for mapping.<br>
 2. When using Shell scripts in the tutorial for sorting chromosome and do `for` circulation, please make sure the `total number of chromosomes` is changed befor running the code.<br>
-3. Chrom-Lasso focuses on detecting long-range chromatin interactions with the distance between interacting loci over 20,000bp, but this parameter can be changed in the `Cpp code` to satisfy the needs of study.<br>
+3. Chrom-Lasso focuses on detecting long-range chromatin interactions with the distance between interacting loci over 20,000bp, but this parameter can be changed in the `Cpp code` to satisfy the needs of study. This parameter should be changed in "/Code/4_Find_IntraDomain_Interaction/findIntraDomainInteraction.cpp", "/Code/6_Test_Distribution/outputTestPosPvalue.cpp", and "/Code/7_Present_Significance/randomSamplingForFDR.cpp" at the same time.<br>
 ![distance file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/distance.png)<br>
-4. When testing for the reads distribution surrounding potential interacting loci pair, Chrom-Lasso defines the testing range by parameter "NEIGHBDIS" in `cpp code`, when this parameter is 5, it defines a 11 cutting site window centered by the potential loci, and you can change this parameter in Cpp code to satisfy the needs of study.<br>
+4. When testing for the reads distribution surrounding potential interacting loci pair, Chrom-Lasso defines the testing range by parameter "NEIGHBDIS" in `cpp code`, when this parameter is 5, it defines a 11 cutting site window centered by the potential loci, and you can change this parameter in Cpp code to satisfy the needs of study. This parameter should be changed in "/Code/4_Find_IntraDomain_Interaction/findIntraDomainInteraction.cpp", "/Code/6_Test_Distribution/outputTestPosPvalue.cpp", and "/Code/7_Present_Significance/randomSamplingForFDR.cpp" at the same time.<br>
 ![neighbour file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/neighbour.png)<br>
 
 
