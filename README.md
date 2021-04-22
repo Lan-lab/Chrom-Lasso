@@ -210,7 +210,7 @@ Select interactions with FDR<0.05
 ```
 awk '{if($6<0.00000587) print $0;}' all_interactions > interactions_fdr0.05
 ```
-## Reminder:
+### Reminder:
 1. For cutting site input file, please make sure this file is derived from the same genome version with the one you use for mapping.<br>
 2. For domain file, please check the species for data at first.<br>
 3. When using Shell scripts in the totorial for sorting chromosome and do "for" circulation, please make sure the total number of chromosomes is changed befor running the code.<br>
