@@ -40,6 +40,11 @@ for chr in {1..19} X;do awk '{if($1=="'$chr'") print $0;}' Mouse.formatted;done 
 The sortChr file contains the paired end sequencing information of Hi-C data.<br>
 ![sortChr file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/sortChr.png)<br>
 ### Run Chrom-Lasso to detect cis chromatin interactions
+#### Arrange hybrid fragments based on domain file and cutting site file
+```
+/Code/2_Arrange_Domain/HiC_mixturePLD_singleThread -g mm10 -w 51 500 10000 26 1 -d /Prepare_Input_File/Domain_File/total.domain.mm10  -c
+/Prepare_Input_File/Cutting_Site_File/MboI.mm10.bed Mouse.sortChr > "Mouse.sortChr_summary"
+```
 
 
  
