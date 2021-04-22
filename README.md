@@ -172,6 +172,7 @@ for chr in {1..19} X;do zcat chr$chr/sigTest_*.all.gz | awk '{print "'$chr'\t"$0
 ```
 ##### Results:
 This step provides users with a summary of detected interactions.<br>
+![results file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/results.png)<br>
 Each line stands for a detected interaction.<br>
 Column 1: chromosome<br>
 Colume 2: interacting end1<br>
@@ -180,7 +181,24 @@ Column 4: users can ignore this column.<br>
 Column 5: beta coefficients for testing distribution, which can be used to infer the relative proportion of cells with this interaction. The bigger this value, the larger the proportion.<br>
 Column 6: p value<br>
 Column 7: beta coefficients for lasso regression. if column 5 is not equal to column 7, this means that this interaction comes from lasso regression. Users can grap interactions from lasso regression seperately and select them based on column 7.<br>
-![results file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/results.png)<br>
+#### 7. Estimate FDR level
+```
+for chr in {1..19} X;
+do 
+    cd chr$chr
+   /Code/7_Present_Significance/randomSamplingForFDR /Output_path/chr$chr"_csInterChromTotalMap" /Output_path/chr$chr"_domainSitesMap" /Output_path/chr$chr"_domainCSinterFreq" chr$chr /Output_path/Mouse.polyCoef \-13.95 1.854
+   cd ../
+done;
+cat chr*/randomSamples* > randomSamples.combined
+Rscript /Code/7_Present_Significance/fdrFromRandomSamples.r
+```
+##### Results:
+This step generates "randomSamples.combined.fdr" and "randomSamples.combined.posFdr" files to estimate the FDR level for interactions.<br>
+"randomSamples.combined.fdr" contains FDR level for all randomly pickig loci pairs.<br>
+"randomSamples.combined.posFdr" contains FDR level for randomly picking loci pairs with beta coefficients above 0.<br>
+![fdr file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/fdr.png)<br>
+
+
 
 
 
