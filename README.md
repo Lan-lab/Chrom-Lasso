@@ -18,7 +18,7 @@ This folder contains the analysis pipeline for Mouse and Human, you can directly
 you can also use your own "fastq" files from Hi-C experiments to test the tutorial step by step from the preprocessing to running Chrom-Lasso.
 ## Environment
 The compile of Chrom-Lasso recommends: gcc (4.9.2), boost_1.51. And it also needs R (>=3.0) to run polynomial regression and lasso regression. Users can use "makefile" in Code folder for compile.
-## Tutorial
+## Tutorial (mouse)
 ### Prepare input files
 Chrom-Lasso needs 3 input files prepared according to the Hi-C experimental design. 
 #### 1. Cutting site file
@@ -103,8 +103,76 @@ do
 done;
 ```
 ##### Results:
-In each chromosome folder, this step generates "oneCol" and "testPosP" file for each domain.
-
+In each chromosome folder, this step generates "oneCol" and "testPosP" files for each domain, which contain the information for independent interacting center.
+#### 6. Summary of interactions
+```
+for chr in {1..19} X
+do
+    cd chr$chr
+    domainNum=`tail -n1 chr"$chr"_out_debug | awk '{print $2}'`
+    for (( c=0; c<=$domainNum; c++ ))
+    do
+        testNum1=`cat nnlassoOut_"$c" | tail -n2 | head -1 | awk '{print $2}'`;testNum2=`cat regionData_"$c" | tail -n2 | head -1 | awk '{print $2}'`;testNum3=`wc -l regionData_"$c" | awk '{print $1;}'`
+        if [ "$testNum1" = "$testNum2" ] || [ "$testNum3" == 0 ]
+        then
+            echo $chr.$c.match
+        else
+            echo $chr.$c.notMatch
+        fi
+    done
+    cd ../
+done > domainNnlassoResults
+for chr in {1..19} X
+do
+    echo $chr
+    cd chr$chr
+    domainNum=`tail -n1 chr"$chr"_out_debug | awk '{print $2}'`
+    for (( c=0; c<=$domainNum; c++ ))
+    do
+        testNum1=`cat nnlassoOut_"$c" | tail -n2 | head -1 | awk '{print $2}'`;testNum2=`cat testPosP_"$c" | awk '{if(NF==7) {m=$3;}}END{print m;}'`;testNum3=`wc -l regionData_"$c" | awk '{print $1;}'`
+        if [ "$testNum1" = "$testNum2" ] || [ "$testNum3" == 0 ]
+        then
+            echo $chr.$c.match
+        else
+            echo $chr.$c.notMatch
+        fi
+    done
+    cd ../
+done > domainTestPos
+for chr in {1..19} X
+do
+    cd chr$chr
+    domainNum=`tail -n1 chr"$chr"_out_debug | awk '{print $2}'`
+    for (( c=0; c<=$domainNum; c++ ))
+    do
+	cat testPosP_"$c" | awk '{if(NF==7) {printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%.10f\t%.10f\n",$1,$2,$3,$4,$5,$6,$7,$6,$7);}else{print $0;}}' > temp1
+	cat nnlassoOut_"$c" | awk '{if($1!~/^\[/) {printf("%.10f",$1);for(i=2;i<=NF;i++){printf("\t%.10f",$i);}printf("\n");}else{print $0;}}' > temp2
+	awk 'FNR==NR{if(NF==9){i=$2;j=1;beta[i]=$6;pval[i]=$7}else{if(NF==3){map[i,j]=$0;}j++;} next;}{if($1~/^\[/){i=$2;}else{if(i in pval){for(j=1;j<=NF;j++) {if(((i,j) in map) && $j!="Error!"){print map[i,j]"\t"beta[i]"\t"pval[i]"\t"$j;}}}}}' temp1  temp2 | sort -k1,1n -k2,2n -u | gzip > sigTest_"$c".all.gz
+    done
+    cd ../
+done
+for chr in {1..19} X
+do
+    echo $chr
+    cd chr$chr
+    domainNum=`tail -n1 chr"$chr"_out_debug | awk '{print $2}'`
+    for (( c=0; c<=$domainNum; c++ ))
+    do
+	testNum1=`cat nnlassoOut_"$c" | tail -n2 | head -1 | awk '{print $2+1}'`;testNum2=`zcat sigTest_"$c".all.gz | wc -l | awk '{print $1;}'`;testNum3=`wc -l regionData_"$c" | awk '{print $1;}'`
+	if [ "$testNum1" = "$testNum2" ] || [ "$testNum3" == 0 ]
+	then
+	    echo $chr.$c.match
+	else
+	    echo $chr.$c.notMatch
+	fi
+    done
+    cd ../
+done > domainSigTest.all
+for chr in {1..19} X;do zcat chr$chr/sigTest_*.all.gz | awk '{print "'$chr'\t"$0;}';cat chr$chr/oneCol_* | awk '{print "'$chr'\t"$1"\t"$2"\t0\t"$3"\t"$4"\t"$3;}'; done | sort -k1,1 -k2,2n -k3,3n > all_interactions
+```
+##### Results:
+This step provides users with a summary of detected interactions.<br>
+![results file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/results.png)<br>
 
 
 
