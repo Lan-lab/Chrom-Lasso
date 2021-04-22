@@ -216,7 +216,7 @@ awk '{if($6<0.00000587) print $0;}' all_interactions > interactions_fdr0.05
 3. Chrom-Lasso focuses on detecting long-range chromatin interactions with the distance between interaction loci over 20000bp, but this parameter can be changed in the `Cpp code` to satisfy the needs of study.<br>
 ![distance file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/distance.png)<br>
 4. When testing for the reads distribution surrounding potential interaction loci pair, Chrom-Lasso defines the testing range by parameter "NEIGHBDIS" in `cpp code`, when this parameter is 5, it defines a 11 cutting site window centered by the potential loci, and you can change this parameter in Cpp code to satisfy the needs of study.<br>
-![neighbour file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/neighbor.png)<br>
+![neighbour file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/neighbour.png)<br>
 
 
 
