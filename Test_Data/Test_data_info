@@ -1,4 +1,3 @@
 For the consideration of limitated space of upload on GitHub, 
 here, we only preserve part of the raw test data made up of hybrid fragments from whole genome to show the format of input file used by Chrom-Lasso. 
-You can also download "merged_nodupFile" of published dataset from the download address in file "HIC_merged_nodupFiles.fromXML",
-which contains the preprocessed files of GSE63525 Hi-C dataset, and then follow the tutorial for further analysis.
+
