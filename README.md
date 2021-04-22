@@ -172,6 +172,14 @@ for chr in {1..19} X;do zcat chr$chr/sigTest_*.all.gz | awk '{print "'$chr'\t"$0
 ```
 ##### Results:
 This step provides users with a summary of detected interactions.<br>
+Each line stands for a detected interaction.<br>
+Column 1: chromosome<br>
+Colume 2: interacting end1<br>
+Column 3: interacting end2<br>
+Column 4: users can ignore this column.<br>
+Column 5: beta coefficients for testing distribution, which can be used to infer the relative proportion of cells with this interaction. The bigger this value, the larger the proportion.<br>
+Column 6: p value<br>
+Column 7: beta coefficients for lasso regression. if column 5 is not equal to column 7, this means that this interaction comes from lasso regression. Users can grap interactions from lasso regression seperately and select them based on column 7.<br>
 ![results file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/results.png)<br>
 
 
