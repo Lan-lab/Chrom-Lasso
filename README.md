@@ -197,7 +197,9 @@ This step generates "randomSamples.combined.fdr" and "randomSamples.combined.pos
 "randomSamples.combined.fdr" contains FDR level for all randomly pickig loci pairs.<br>
 "randomSamples.combined.posFdr" contains FDR level for randomly picking loci pairs with beta coefficients above 0.<br>
 ![fdr file](https://github.com/Lan-lab/Chrom-Lasso/blob/main/documentation/fdr.png)<br>
-
+Each line stands for a randomly picking loci pair.<br>
+Column 5: p value multiple correction based on FDR<br>
+Colume 6: p value multiple correction based on BY<br>
 
 
 
