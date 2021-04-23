@@ -8,7 +8,7 @@ This folder contains codes for Chrom-Lasso, the usage of them is shown in the "T
 2. Prepare_Input_File：
 This folder contains input files needed by Chrom-Lasso to do analysis, mainly are domain files and cutting site files for Mouse and Human,
 The domain files are constant for specific species, but the genomic coordinate in the file can be changed with genome version by tool "LiftOver".
-The cutting site files can be produced by tool "Oligomatch" with reference genome and cutting sequence for the restriction endonuclease.
+The cutting site files can be produced by tool "OligoMatch" with reference genome and cutting sequence for the restriction endonuclease.
 3. Test_Data：
 This folder contains "sortChr" simple example files for Mouse and Human for testing Chrom-Lasso, the "sortChr" file are preprocessed file from raw "fastq" sequencing files,
 the preprocessing of "fastq" files can be done by `Juicer` (https://github.com/aidenlab/juicer). The `Juicer` generates "merged_nodups" file, and you can use the Shell scripts in tutorial that sorts the file by chromosome order to generate "sortChr" file for further analysis.
