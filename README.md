@@ -201,7 +201,7 @@ Colume 6: p value multiple correction based on BY
 ##### Selecting:
 Get significance level, for FDR<0.05:
 ```
-awk '{if($5<0.05 && $5>0.0499) print $0;}' randomSamples.combined.posFdr | sort -k5,5n | tail -n1 | awk '{print $4}' > FDR_0.05 
+awk '{if($5<0.05 && $5>0.0499) print $0;}' randomSamples.combined.fdr | sort -k5,5n | tail -n1 | awk '{print $4}' > FDR_0.05 
 ```
 if FDR_0.05=0.00000587
 Select interactions with FDR<0.05
