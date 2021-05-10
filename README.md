@@ -15,7 +15,7 @@ the preprocessing of "fastq" files can be done by `Juicer` (https://github.com/a
 4. Tutorial：
 This folder contains the analysis pipeline for Mouse and Human.
 ## Environment
-The compile of Chrom-Lasso Cpp code needs: gcc (>=4.8). And it also needs R (>=3.0) to run polynomial regression and lasso regression. Users can use "makefile" in Code folder for compiling Cpp code.
+The compile of Chrom-Lasso Cpp code needs: gcc (>=4.8) and boost_1_51. And it also needs R (>=3.0) to run polynomial regression and lasso regression. Users can use "makefile" in Code folder for compiling Cpp code.
 ## Tutorial (mouse)
 ### Prepare input files
 Chrom-Lasso needs 3 input files prepared according to the Hi-C experimental design. 
