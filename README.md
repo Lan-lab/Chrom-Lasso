@@ -73,6 +73,21 @@ do
    cd ../
 done;
 ```
+##### Parameters:
+Here, `-13.95` and `1.854` were defult parameters used to estimate background model. Users can also get these 2 parameters following the instruction below:<br>
+```
+/Code/4_Find_IntraDomain_Interaction/calEffBetas/calEffBetas chr1_csInterChromTotalMap chr1_domainSitesMap chr1_domainCSinterFreq chr1_out PolyCoef > chr1_out_summary
+```
+The above step generating 3 files: `chr1_out_freq`, `chr1_out_effvec`, and `chr1_out_offset`.<br>
+Then run following `R script`:<br>
+```
+freq<-scan("chr1_out_freq")
+offVec<-scan("chr1_out_offset")
+effVec<-scan("chr1_out_effvec")
+glmobj<-glm(freq~effVec,family="poisson",offset=offVec)
+print(glmobj)
+```
+The 2 parameters will be estimated based on data from selected chromosome, users can also select another chromosome to do this.
 ##### Results:
 For each chromosome, this step generates an independent folder containing "regionData" and "distMatrix" files for each domain on this chromosome.<br>
 "regionData" and "distMatrix" files containing frequency and genomic distance information for interactions that need lasso regression to select.
