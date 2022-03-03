@@ -1,0 +1,5 @@
+freq<-scan("chr1_out_freq")
+offVec<-scan("chr1_out_offset")
+effVec<-scan("chr1_out_effvec")
+glmobj<-glm(freq~effVec,family="poisson",offset=offVec)
+print(glmobj)
